@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        /* Main container */
+        .dashboard-container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #2e307e;
+            color: white;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #4143c6;
+        }
+
+        /* Content area */
+        .content-area {
+            flex-grow: 1;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: white;
+            overflow-y: auto;
+        }
+
+        /* Complaints table styling */
+        #complaintsTable {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        #complaintsTable th, #complaintsTable td {
+            border: 1px solid #dddddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        #complaintsTable th {
+            background-color: #f2f2f2;
+        }
+
+        /* Form container styling */
+        .form-container {
+            margin-top: 20px;
+            border: 1px solid #dddddd;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .form-container h2 {
+            margin: 0 0 10px;
+        }
+
+        .form-container div {
+            margin-bottom: 10px;
+        }
+
+        .form-container label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-container input, .form-container select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .form-container button {
+            padding: 10px 15px;
+            background-color: #2e307e;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #4143c6;
+        }
+
+        .edit, .delete {
+            padding: 5px 10px;
+            margin-right: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .edit {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .edit:hover {
+            background-color: #45a049;
+        }
+
+        .delete {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .delete:hover {
+            background-color: #da190b;
+        }
+        /* Log Out button styling */
+        .logout {
+            margin-top: 30px;
+            padding: 10px;
+            background-color: #e74c3c;
+            color: white;
+            text-align: center;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .logout:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Admin Dashboard</h2>
+            <a href="#" onclick="loadComplaints()">Complaints</a>
+            <a href="#">Users</a>
+            <a href="#">Settings</a>
+            <a href="#">Reports</a>
+            <a href="#" class="logout" onclick="logout()">Log Out</a>
+        </div>
+
+        <!-- Content Area -->
+        <div id="content-area" class="content-area">
+            <h1>Welcome to the Admin Dashboard</h1>
+            <p>Select an option from the sidebar to manage complaints, users, and more.</p>
+        </div>
+    </div>
+
+    <script>
+        // Function to load complaints content dynamically into the content area
+        function loadComplaints() {
+            const complaintsPage = `
+                <h1>Admin - Manage Complaints</h1>
+                <table id="complaintsTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Complaint</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Status</th>
+                            <th>Room Number</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="complaintsBody">
+                        <!-- Dynamic rows from JavaScript -->
+                    </tbody>
+                </table>
+                <div class="form-container">
+                    <h2 id="formTitle">Update Complaint</h2>
+                    <form id="complaintForm">
+                        <input type="hidden" id="complaintId" name="complaintId">
+                        <div>
+                            <label for="complaint">Complaint:</label>
+                            <input type="text" id="complaint" name="complaint" readonly>
+                        </div>
+                        <div>
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div>
+                            <label for="phone">Phone:</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div>
+                            <label for="status">Status:</label>
+                            <select id="status" name="status">
+                                <option value="in-progress">In Progress</option>
+                                <option value="resolved">Resolved</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="room">Room Number:</label>
+                            <input type="text" id="room" name="room" required>
+                        </div>
+                        <button type="submit">Update</button>
+                    </form>
+                </div>
+            `;
+            document.getElementById('content-area').innerHTML = complaintsPage;
+            renderComplaints();
+        }
+
+        // Sample complaints data (this would come from the backend in production)
+        let complaints = [
+            {id: 1, complaint: 'Broken door', email: 'user1@example.com', phone: '1234567890', status: 'in-progress', room: '101'},
+            {id: 2, complaint: 'Water leakage', email: 'user2@example.com', phone: '9876543210', status: 'resolved', room: '202'}
+        ];
+
+        // Render the complaints in the table
+        function renderComplaints() {
+            const tableBody = document.getElementById('complaintsBody');
+            tableBody.innerHTML = '';
+            complaints.forEach(complaint => {
+                const actionButtons = complaint.status === 'resolved'
+                    ? `<button class="edit" onclick="editComplaint(${complaint.id})">Edit</button> <button class="delete" onclick="deleteComplaint(${complaint.id})">Delete</button>`
+                    : `<button class="edit" onclick="editComplaint(${complaint.id})">Edit</button>`;
+
+                const row = `
+                    <tr>
+                        <td>${complaint.id}</td>
+                        <td>${complaint.complaint}</td>
+                        <td>${complaint.email}</td>
+                        <td>${complaint.phone}</td>
+                        <td>${complaint.status}</td>
+                        <td>${complaint.room}</td>
+                        <td>${actionButtons}</td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        // Populate form for editing a complaint
+        function editComplaint(id) {
+            const complaint = complaints.find(comp => comp.id == id);
+            document.getElementById('complaintId').value = complaint.id;
+            document.getElementById('complaint').value = complaint.complaint;
+            document.getElementById('email').value = complaint.email;
+            document.getElementById('phone').value = complaint.phone;
+            document.getElementById('status').value = complaint.status;
+            document.getElementById('room').value = complaint.room;
+            document.getElementById('formTitle').innerText = 'Update Complaint';
+        }
+
+        // Handle form submission to update complaint
+        document.addEventListener('submit', function (e) {
+            if (e.target.id === 'complaintForm') {
+                e.preventDefault();
+
+                const id = document.getElementById('complaintId').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const status = document.getElementById('status').value;
+                const room = document.getElementById('room').value;
+
+                complaints = complaints.map(comp => comp.id == id ? {...comp, email, phone, status, room} : comp);
+
+                document.getElementById('complaintForm').reset();
+                renderComplaints();
+            }
+        });
+
+        // Handle delete complaint
+        function deleteComplaint(id) {
+            if (confirm("Are you sure you want to delete this complaint?")) {
+                complaints = complaints.filter(comp => comp.id !== id);
+                renderComplaints();
+            }
+        }
+
+        // Handle logout action
+        function logout() {
+            // Redirect to the login page
+            window.location.href = 'index.html'; // Change to your actual login page URL
+        }
+    </script>
+</body>
+</html>

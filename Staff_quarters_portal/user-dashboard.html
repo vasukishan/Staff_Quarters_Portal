@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - BIT Staff Quarters Portal</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .resolved {
+            color: green;
+        }
+        .unresolved {
+            color: red;
+        }
+        .complaint-box {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .complaint-status {
+            font-weight: bold;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>USER</h2>
+                <button id="logoutBtn">Log Out</button>
+            </div>
+            <ul>
+                <li><a href="#" id="dashboardLink" class="active">Dashboard</a></li>
+                <li><a href="#" id="profileLink">User Profile</a></li>
+                <li><a href="#" id="registerComplaintsLink">Register Complaints</a></li>
+                <li><a href="#" id="complaintStatusLink">Complaint Status</a></li>
+            </ul>
+        </aside>
+        
+        <main class="dashboard-content">
+            <header>
+                <div class="breadcrumbs">
+                    <span>User</span> &gt; <span id="pageTitle">Dashboard</span>
+                </div>
+                <div class="user-profile">
+                    <img src="C:\Users\vasuk\OneDrive\vasuki\Desktop\fullstack\image.png" alt="user">
+                    <span>User</span>
+                </div>
+            </header>
+
+            <!-- Welcome Message Section -->
+            <section class="content-section" id="welcomeSection">
+                <div class="welcome-message">
+                    <h3>Welcome to the User Dashboard!</h3>
+                </div>
+            </section>
+
+            <!-- Profile Section -->
+            <section class="content-section hidden" id="profileSection">
+                <h2>User Profile</h2>
+                <p><strong>Name:</strong> User Name</p>
+                <p><strong>Room Number:</strong> 101</p>
+                <p><strong>Ward Number:</strong> A</p>
+            </section>
+
+            <!-- Register Complaints Section -->
+            <section class="content-section hidden" id="complaintsSection">
+                <h2>Register a Complaint</h2>
+                <form id="complaintForm">
+                    <label for="roomNo">Room Number:</label>
+                    <input type="text" id="roomNo" name="roomNo" required>
+                    <br><br>
+
+                    <label for="complaintType">Select Complaint Type:</label>
+                    <select id="complaintType" name="complaintType" required>
+                        <option value="gardening">Gardening</option>
+                        <option value="plumbing">Plumbing</option>
+                        <option value="electrical">Electrical</option>
+                    </select>
+                    <br><br>
+
+                    <label for="complaintDetails">Complaint Details:</label>
+                    <textarea id="complaintDetails" name="complaintDetails" rows="4" required></textarea>
+                    <br><br>
+
+                    <button type="submit">Submit Complaint</button>
+                </form>
+            </section>
+
+            <!-- Complaint Status Section -->
+            <section class="content-section hidden" id="complaintStatusSection">
+                <h2>Complaint Status</h2>
+                <div id="resolvedComplaints">
+                    <h3>Resolved Complaints:</h3>
+                    <div class="complaint-box resolved">
+                        <span>Gardening issue resolved on 2023-09-01</span>
+                        <span class="complaint-status">Resolved</span>
+                    </div>
+                    <div class="complaint-box resolved">
+                        <span>Plumbing issue resolved on 2023-08-15</span>
+                        <span class="complaint-status">Resolved</span>
+                    </div>
+                </div>
+                <div id="unresolvedComplaints">
+                    <h3>Unresolved Complaints:</h3>
+                    <div class="complaint-box unresolved">
+                        <span>Electrical issue reported on 2023-09-10</span>
+                        <span class="complaint-status">Not Resolved</span>
+                    </div>
+                    <div class="complaint-box unresolved">
+                        <span>Heating issue reported on 2023-09-15</span>
+                        <span class="complaint-status">Not Resolved</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="user-dashboard.js"></script>
+</body>
+</html>
